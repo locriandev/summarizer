@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llama-server-config
+data:
+  LLAMA_SERVER_HOST: "llama-service"
+  LLAMA_SERVER_PORT: "80"

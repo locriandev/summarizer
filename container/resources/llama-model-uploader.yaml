@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: model-uploader
+spec:
+  containers:
+    - name: uploader
+      image: registry.access.redhat.com/ubi8/ubi
+      command: ["sleep", "infinity"]
+      volumeMounts:
+        - name: model-volume
+          mountPath: /models
+  volumes:
+    - name: model-volume
+      persistentVolumeClaim:
+        claimName: llama-model-pvc

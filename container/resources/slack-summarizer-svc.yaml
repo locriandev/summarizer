@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: slack-summarizer-service
+spec:
+  selector:
+    app: slack-summarizer
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

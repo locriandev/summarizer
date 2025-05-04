@@ -1,0 +1,17 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: slack-summarizer
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: slack-summarizer:latest
+  source:
+    type: Git
+    git:
+      uri: https://github.com/locriandev/summarizer.git
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: container/Dockerfile

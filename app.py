@@ -22,13 +22,13 @@ generator = SummaryGenerator(LLAMA_SERVER_ENDPOINT)
 @app.get('/summarize-url')
 async def summarize_url(url: str = Query(..., description='Slack message permalink')):
     result = await generator.summarize_thread_by_permalink(url)
-    return JSONResponse(content={'summary': result})
+    return JSONResponse(content=result)
 
 
 @app.get('/summarize-art-attention')
 async def summarize_art_attention():
     summaries = await generator.summarize_art_attention_threads()
-    return JSONResponse(content={'summaries': summaries})
+    return JSONResponse(content=summaries)
 
 
 if __name__ == "__main__":

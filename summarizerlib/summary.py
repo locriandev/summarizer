@@ -1,10 +1,10 @@
 import asyncio
 import logging
 import os
-from string import Template
 from typing import Optional, List, Dict
 
 import aiohttp
+from jinja2 import Environment, FileSystemLoader
 
 from summarizerlib.slack import SlackThreadFinder
 
@@ -21,10 +21,10 @@ class SummaryGenerator:
         """
 
         self.logger = logging.getLogger(__name__)
-        self.prompt_template = Template(
-            "[INST] Summarize this conversation taken from Slack:\n\n"
-            "$text [/INST]"
-        )
+        template_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        env = Environment(loader=FileSystemLoader(template_path))
+        self.prompt_template = env.get_template('prompt-template.j2')
+
         self.endpoint = llama_server_endpoint
         self.headers = {'Content-Type': 'application/json'}
 
@@ -43,7 +43,7 @@ class SummaryGenerator:
         """
 
         self.logger.info('Summarizing text: %s', text)
-        prompt = self.prompt_template.substitute(text=text.strip())
+        prompt = self.prompt_template.render(text=text.strip())
         payload = {
             "prompt": prompt,
             "n_predict": 512

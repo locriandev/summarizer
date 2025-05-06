@@ -102,7 +102,7 @@ class SlackThreadFinder:
             user_id = msg.get('user', None)
             username = self.get_username(user_id) if user_id else msg.get('username', None)
             text = msg.get('text', '')
-            parts.append(f"{username}: {text}")
+            parts.append(f"- {username}: {text}")
         return "\n".join(parts)
 
     def fetch_thread_by_permalink(self, permalink: str) -> list:

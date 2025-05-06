@@ -45,6 +45,11 @@ spec:
             configMapKeyRef:
               key: LLAMA_SERVER_PORT
               name: llama-server-config
+        - name: PROMPT_TEMPLATE
+          valueFrom:
+            configMapKeyRef:
+              name: slack-summarizer-config
+              key: PROMPT_TEMPLATE
         image: image-registry.openshift-image-registry.svc:5000/hackspace-dpaolell/slack-summarizer@latest
         imagePullPolicy: IfNotPresent
         name: slack-summarizer

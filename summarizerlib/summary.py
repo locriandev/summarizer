@@ -4,7 +4,7 @@ import os
 from typing import Optional, List, Dict
 
 import aiohttp
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Template
 
 from summarizerlib.slack import SlackThreadFinder
 
@@ -21,9 +21,8 @@ class SummaryGenerator:
         """
 
         self.logger = logging.getLogger(__name__)
-        template_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        env = Environment(loader=FileSystemLoader(template_path))
-        self.prompt_template = env.get_template('prompt-template.j2')
+
+        self.prompt_template = Template(os.environ['PROMPT_TEMPLATE'])
 
         self.endpoint = llama_server_endpoint
         self.headers = {'Content-Type': 'application/json'}
@@ -42,7 +41,7 @@ class SummaryGenerator:
         :return: A string containing the summary, or None if the request fails.
         """
 
-        self.logger.info('Summarizing text: %s', text)
+        self.logger.debug('Summarizing text: %s', text)
         prompt = self.prompt_template.render(text=text.strip())
         payload = {
             "prompt": prompt,

@@ -101,6 +101,7 @@ class SummaryGenerator:
         :return: A dictionary with 'permalink' and corresponding 'summary'.
         """
 
+        permalink = permalink.strip()
         self.logger.info('Summarizing thread by permalink: %s', permalink)
 
         conversation = self.slack_finder.fetch_thread_by_permalink(permalink)
